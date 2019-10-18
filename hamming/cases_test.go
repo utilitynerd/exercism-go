@@ -70,4 +70,22 @@ var testCases = []struct {
 		1,
 		false,
 	},
+	{
+		"aaüa",
+		"aÃa語",
+		3,
+		false,
+	},
+	{
+		"aÃü語",
+		"aaaa",
+		3,
+		false,
+	},
+	{
+		"aaaa",
+		"aÃü語",
+		3,
+		false,
+	},
 }
