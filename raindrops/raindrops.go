@@ -3,27 +3,22 @@ package raindrops
 
 import (
 	"strconv"
-	"strings"
 )
 
 // Convert converts an integer to a simulated rain sound
 func Convert(i int) string {
-	var output strings.Builder
-	hasFactor := false
+	var output string
 	if i%3 == 0 {
-		output.WriteString("Pling")
-		hasFactor = true
+		output += "Pling"
 	}
 	if i%5 == 0 {
-		output.WriteString("Plang")
-		hasFactor = true
+		output += "Plang"
 	}
 	if i%7 == 0 {
-		output.WriteString("Plong")
-		hasFactor = true
+		output += "Plong"
 	}
-	if hasFactor {
-		return output.String()
+	if len(output) == 0 {
+		return strconv.Itoa(i)
 	}
-	return strconv.Itoa(i)
+	return output
 }
