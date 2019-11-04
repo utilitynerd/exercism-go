@@ -14,11 +14,10 @@ func Valid(s string) bool {
 		return false
 	}
 	var sum int
-	var toDouble bool
-	var digit int
-	var err error
+	toDouble := false
 	for i := len(s) - 1; i >= 0; i-- {
-		if digit, err = strconv.Atoi(string(s[i])); err != nil {
+		digit, err := strconv.Atoi(string(s[i]))
+		if err != nil {
 			return false
 		}
 		if toDouble {
