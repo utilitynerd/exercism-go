@@ -26,6 +26,27 @@ func TestSquare(t *testing.T) {
 	}
 }
 
+func TestSquare2(t *testing.T) {
+	for _, test := range squareTests {
+		actualVal, actualErr := Square2(test.input)
+
+		// check actualVal only if no error expected
+		if !test.expectError && actualVal != test.expectedVal {
+			t.Fatalf("FAIL: %s\nSquare(%d) expected %d, Actual %d", test.description, test.input, test.expectedVal, actualVal)
+		}
+
+		// if we expect an error and there isn't one
+		if test.expectError && actualErr == nil {
+			t.Fatalf("FAIL: %s\nSquare(%d) expected an error, but error is nil", test.description, test.input)
+		}
+		// if we don't expect an error and there is one
+		if !test.expectError && actualErr != nil {
+			var _ error = actualErr
+			t.Fatalf("FAIL: %s\nSquare(%d) expected no error, but error is: %s", test.description, test.input, actualErr)
+		}
+		t.Logf("PASS: %s", test.description)
+	}
+}
 func TestTotal(t *testing.T) {
 	var expected uint64 = 18446744073709551615
 	if actual := Total(); actual != expected {
@@ -39,6 +60,17 @@ func BenchmarkSquare(b *testing.B) {
 
 		for _, test := range squareTests {
 			Square(test.input)
+		}
+
+	}
+}
+
+func BenchmarkSquare2(b *testing.B) {
+
+	for i := 0; i < b.N; i++ {
+
+		for _, test := range squareTests {
+			Square2(test.input)
 		}
 
 	}

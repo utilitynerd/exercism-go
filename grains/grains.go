@@ -16,6 +16,15 @@ func Square(i int) (grains uint64, err error) {
 	return grains, nil
 }
 
+// Square2 retruns the number of grains on a specific chessboard square
+func Square2(i int) (grains uint64, err error) {
+	if i <= 0 || i > 64 {
+		return 0, fmt.Errorf("invalid square %d", i)
+	}
+	grains = uint64(1 << (i - 1))
+	return grains, nil
+}
+
 // Total returns the total number of wheat grains on a filled chessboard
 func Total() (grains uint64) {
 	return math.MaxUint64
