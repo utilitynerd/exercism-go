@@ -8,6 +8,7 @@ import (
 
 var nonAplha = regexp.MustCompile("[^a-z0-9]+")
 
+// Atbash implements the atbash cipher for ascii input
 func Atbash(s string) string {
 	s = strings.ToLower(s)
 	s = nonAplha.ReplaceAllString(s, "")
