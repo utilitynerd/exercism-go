@@ -7,15 +7,14 @@ import (
 )
 
 // Square retruns the number of grains on a specific chessboard square
-func Square(i int) (grains uint64, err error) {
+func Square(i int) (uint64, error) {
 	if i <= 0 || i > 64 {
 		return 0, fmt.Errorf("invalid square %d", i)
 	}
-	grains = uint64(1 << (i - 1))
-	return grains, nil
+	return 1 << (i - 1), nil
 }
 
 // Total returns the total number of wheat grains on a filled chessboard
 func Total() (grains uint64) {
-	return (1 << 64) - 1
+	return 1<<64 - 1
 }
