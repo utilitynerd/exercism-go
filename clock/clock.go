@@ -2,43 +2,36 @@ package clock
 
 import "fmt"
 
-// Clock implements a 24 hour clock, with no time zone
+// Clock implements a 24 hour clock, with minute resolution and no time zone
 type Clock struct {
-	h int
-	m int
+	minutes int
 }
 
 // New returns a new Clock.
 func New(hours, minutes int) Clock {
-	if minutes >= 60 {
-		hours += minutes / 60
-		minutes %= 60
-	} else if minutes < 0 {
-		hours += minutes / 60
-		minutes %= 60
-		if minutes < 0 {
-			hours--
-			minutes = 60 + minutes%60
-		}
-	}
-	hours %= 24
 	if hours < 0 {
-		hours = 24 + hours%24
+		minutes += 24*60 + 60*(hours%24)
+	} else {
+		minutes += (hours % 24) * 60
 	}
-	return Clock{hours, minutes}
+	minutes %= 24 * 60
+	if minutes < 0 {
+		minutes = 24*60 + minutes
+	}
+	return Clock{minutes}
 }
 
 // String returns a string representation of a Clock
 func (c Clock) String() string {
-	return fmt.Sprintf("%02d:%02d", c.h, c.m)
+	return fmt.Sprintf("%02d:%02d", c.minutes/60, c.minutes%60)
 }
 
 // Add returns a new Clock with minutes added
 func (c Clock) Add(minutes int) Clock {
-	return New(c.h, c.m+minutes)
+	return New(0, c.minutes+minutes)
 }
 
 // Subtract returns a new Clock with minutes Subtracted
 func (c Clock) Subtract(minutes int) Clock {
-	return New(c.h, c.m-minutes)
+	return New(0, c.minutes-minutes)
 }
