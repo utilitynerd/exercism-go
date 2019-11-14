@@ -13,20 +13,19 @@ func New(hours, minutes int) Clock {
 	if minutes >= 60 {
 		hours += minutes / 60
 		minutes %= 60
-	}
-	if minutes < 0 {
-		if minutes%60 == 0 {
-			hours += minutes / 60
-			minutes = 0
-		} else {
-			hours += (minutes / 60) - 1
+	} else if minutes < 0 {
+		hours += minutes / 60
+		minutes %= 60
+		if minutes < 0 {
+			hours--
 			minutes = 60 + minutes%60
 		}
 	}
+	hours %= 24
 	if hours < 0 {
 		hours = 24 + hours%24
 	}
-	return Clock{hours % 24, minutes}
+	return Clock{hours, minutes}
 }
 
 // String returns a string representation of a Clock
