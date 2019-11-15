@@ -9,14 +9,10 @@ type Clock struct {
 
 // New returns a new Clock.
 func New(hours, minutes int) Clock {
-	if hours < 0 {
-		minutes += 24*60 + 60*(hours%24)
-	} else {
-		minutes += (hours % 24) * 60
-	}
-	minutes %= 24 * 60
+	minutes += hours * 60
+	minutes %= 24*60
 	if minutes < 0 {
-		minutes = 24*60 + minutes
+		minutes += 24*60
 	}
 	return Clock{minutes}
 }
