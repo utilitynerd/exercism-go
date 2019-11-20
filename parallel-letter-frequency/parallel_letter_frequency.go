@@ -40,3 +40,31 @@ func ConcurrentFrequency(texts []string) FreqMap {
 	}
 	return out
 }
+
+func ConcurrentFrequency2(texts []string) FreqMap {
+	results := make(chan *FreqMap)
+	var wg sync.WaitGroup
+
+	for _, s := range texts {
+		wg.Add(1)
+		go func(s string) {
+			defer wg.Done()
+			fm := Frequency(s)
+			results <- &fm
+		}(s)
+	}
+
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
+
+	out := FreqMap{}
+	for result := range results {
+		fm := *result
+		for k := range fm {
+			out[k] += fm[k]
+		}
+	}
+	return out
+}
