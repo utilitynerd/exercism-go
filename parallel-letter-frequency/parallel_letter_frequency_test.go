@@ -56,14 +56,6 @@ func TestConcurrentFrequency(t *testing.T) {
 	}
 }
 
-func TestConcurrentFrequency2(t *testing.T) {
-	seq := OriginalFrequency(euro + dutch + us)
-	con := ConcurrentFrequency2([]string{euro, dutch, us})
-	if !reflect.DeepEqual(con, seq) {
-		t.Fatal("ConcurrentFrequency wrong result")
-	}
-}
-
 func TestSequentialFrequency(t *testing.T) {
 	oSeq := OriginalFrequency(euro + dutch + us)
 	seq := Frequency(euro + dutch + us)
@@ -81,11 +73,5 @@ func BenchmarkSequentialFrequency(b *testing.B) {
 func BenchmarkConcurrentFrequency(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		ConcurrentFrequency([]string{euro, dutch, us})
-	}
-}
-
-func BenchmarkConcurrentFrequency2(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		ConcurrentFrequency2([]string{euro, dutch, us})
 	}
 }
