@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"reflect"
+	"sort"
 	"testing"
 )
 
@@ -275,6 +276,12 @@ func BenchmarkTwoTree(b *testing.B) {
 	}
 }
 
+func BenchmarkTwoTreeSort(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		sort.Slice(twoTreeRecords, func(i, j int) bool { return twoTreeRecords[i].ID < twoTreeRecords[j].ID })
+	}
+}
+
 // Each node but the root node and leaf nodes has ten children.
 func makeTenTreeRecords() []Record {
 	records := make([]Record, 10000)
@@ -309,5 +316,10 @@ var shallowRecords = makeShallowRecords()
 func BenchmarkShallowTree(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Build(shallowRecords)
+	}
+}
+func BenchmarkShallowTreeSort(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		sort.Slice(shallowRecords, func(i, j int) bool { return shallowRecords[i].ID < shallowRecords[j].ID })
 	}
 }
